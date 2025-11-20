@@ -24,7 +24,8 @@ public class AuditLog {
 
     private String action;
 
-    @Column(columnDefinition = "jsonb")
+    // Store JSON/string details as text for broad DB compatibility
+    @Lob
     private String details;
 
     private String ip;

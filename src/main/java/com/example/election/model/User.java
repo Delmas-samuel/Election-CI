@@ -1,9 +1,10 @@
 package com.example.election.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -14,20 +15,22 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
     @GeneratedValue
+    @UuidGenerator
     private UUID id;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String numero;
+
     @Column(nullable = false, unique = true, length = 100)
-    private String username;
+    private String email;
 
     @Column(nullable = false)
     private String passwordHash;
-
-    @Column(length = 20)
-    private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
