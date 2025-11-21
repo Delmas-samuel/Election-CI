@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: election-ci
+    name: election-backend
     env: java
+    plan: free
     buildCommand: "./mvnw clean package -DskipTests"
     startCommand: "java -jar target/*.jar"
-    plan: free
     envVars:
       - key: JAVA_VERSION
         value: 25
