@@ -25,3 +25,18 @@ Avoiding the “Unknown lifecycle phase .9.9” error on Windows
 Notes
 - This repository already ships with a configured Maven Wrapper targeting Maven 3.9.11 (see .mvn/wrapper/maven-wrapper.properties). You usually do not need to re-run the wrapper goal.
 - If you must change the Maven version, prefer editing .mvn/wrapper/maven-wrapper.properties (distributionUrl) or re-running one of the “Correct examples” above.
+
+
+Déploiement sur Render: faut‑il avoir Docker installé localement ?
+- Non, ce n’est pas obligatoire. Render utilise le Dockerfile du projet pour construire l’image dans son infrastructure. Vous pouvez déployer sans installer Docker sur votre machine.
+- Avoir Docker en local est uniquement utile si vous voulez tester l’image chez vous avant de pousser sur Render.
+
+Déployer sur Render (sans Docker local)
+1) Poussez les fichiers Dockerfile et render.yaml sur la branche suivie par Render.
+2) Sur Render, relancez un Deploy. Render construira l’image et démarrera le service.
+3) Assurez‑vous d’avoir la variable d’environnement JAVA_OPTS avec -Dserver.port=$PORT (déjà prévue dans render.yaml).
+
+Tester localement (optionnel, nécessite Docker installé)
+- Construire l’image: docker build -t election-backend:latest .
+- Lancer: docker run -p 8080:8080 -e JAVA_OPTS="-Dserver.port=8080" election-backend:latest
+- Vérifier: ouvrez http://localhost:8080
